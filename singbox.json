@@ -1,0 +1,72 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_local",
+        "address": "local",
+        "detour": "direct-out"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "dns_local"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "inet4_address": "172.26.0.1/16",
+      "auto_route": false,
+      "strict_route": true,
+      "stack": "gvisor",
+      "sniff": true,
+      "domain_strategy": "prefer_ipv4",
+      "endpoint_independent_nat": true,
+      "interface_name": "utun128",
+      "mtu": 1500
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct-out"
+    },
+    {
+      "type": "direct",
+      "tag": "proxy"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "protocol": "dns",
+        "outbound": "dns-out"
+      }
+    ],
+    "rule_set": [],
+    //"auto_detect_interface": true
+    "default_interface": "en0"
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090"
+    },
+    "cache_file": {
+      "enabled": true
+    }
+  }
+}

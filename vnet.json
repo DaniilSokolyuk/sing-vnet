@@ -1,0 +1,11 @@
+{
+  "logger_level": "debug",
+  "vnet_interface": "en0",
+  "sing": {
+    "force_version": "v1.10.7",
+    "exec_path": "",
+    "file_config": "singbox.json",
+    "inbound_tag": "tun-in",
+    "rename_exec": "sing-box"
+  }
+}
